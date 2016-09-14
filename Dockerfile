@@ -23,7 +23,7 @@ ENV BUILD_REQUIRES="curl g++ \
                     gnutls-dev gpgme libev-dev libnl3-dev \
                     libseccomp-dev linux-headers linux-pam-dev \
                     lz4-dev make readline-dev tar xz \
-                   ";
+                   "
 
 RUN apk add --no-cache $BUILD_REQUIRES \
     && curl -SL "ftp://ftp.infradead.org/pub/ocserv/ocserv-$OCSERV_VERSION.tar.xz" -o ocserv.tar.xz \
@@ -47,12 +47,12 @@ RUN apk add --no-cache $BUILD_REQUIRES \
 RUN mkdir -p /etc/ocserv \
     && mkdir -p /etc/ocserv/config-per-group
 COPY ocserv.conf /etc/ocserv/ocserv.conf
-COPY All /etc/ocserv/config-per-group/All
-COPY Route /etc/ocserv/config-per-group/Route
+COPY group/All /etc/ocserv/config-per-group/All
+COPY group/Route /etc/ocserv/config-per-group/Route
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 700 /entrypoint.sh
 
 WORKDIR /etc/ocserv
-EXPOSE 443/tcp
 ENTRYPOINT ["/entrypoint.sh"]
+EXPOSE 443/tcp
 CMD ["ocserv", "-c", "/etc/ocserv/ocserv.conf", "-f"]
