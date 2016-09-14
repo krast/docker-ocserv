@@ -40,7 +40,7 @@ RUN apk add --no-cache $BUILD_REQUIRES \
 	  && make install \
 	  && cd / \
 	  && rm -rf /usr/src/ocserv \
-    && apk del $buildDeps \
+    && apk del $BUILD_REQUIRES \
 	  && rm -rf /var/cache/apk/*
 
 # config
